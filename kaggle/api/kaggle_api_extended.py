@@ -84,7 +84,9 @@ except NameError:
 class KaggleApi(KaggleApi):
     __version__ = '1.5.8'
 
-    CONFIG_NAME_PROXY = 'proxy'
+    CONFIG_NAME_PROXY_URL = 'proxy_url'
+    CONFIG_NAME_PROXY_USERNAME = 'proxy_username'
+    CONFIG_NAME_PROXY_PASSWORD = 'proxy_password'
     CONFIG_NAME_COMPETITION = 'competition'
     CONFIG_NAME_PATH = 'path'
     CONFIG_NAME_USER = 'username'
@@ -218,8 +220,14 @@ class KaggleApi(KaggleApi):
 
         # Proxy
 
-        if self.CONFIG_NAME_PROXY in config_data:
-            configuration.proxy = config_data[self.CONFIG_NAME_PROXY]
+        if self.CONFIG_NAME_PROXY_URL in config_data:
+            configuration.proxy_url = config_data[self.CONFIG_NAME_PROXY_URL]
+
+        if self.CONFIG_NAME_PROXY_USERNAME in config_data:
+            configuration.proxy_username = config_data[self.CONFIG_NAME_PROXY_USERNAME]
+
+        if self.CONFIG_NAME_PROXY_PASSWORD in config_data:
+            configuration.proxy_password = config_data[self.CONFIG_NAME_PROXY_PASSWORD]
 
         # Cert File
 
@@ -239,7 +247,7 @@ class KaggleApi(KaggleApi):
             if 'Proxy' in type(error).__name__:
                 raise ValueError(
                     'The specified proxy ' +
-                    config_data[self.CONFIG_NAME_PROXY] +
+                    config_data[self.CONFIG_NAME_PROXY_URL] +
                     ' is not valid, please check your proxy settings')
             else:
                 raise ValueError(
@@ -410,7 +418,9 @@ class KaggleApi(KaggleApi):
         print('Configuration values from ' + self.config_dir)
         self.print_config_value(self.CONFIG_NAME_USER, prefix=prefix)
         self.print_config_value(self.CONFIG_NAME_PATH, prefix=prefix)
-        self.print_config_value(self.CONFIG_NAME_PROXY, prefix=prefix)
+        self.print_config_value(self.CONFIG_NAME_PROXY_URL, prefix=prefix)
+        self.print_config_value(self.CONFIG_NAME_PROXY_USERNAME, prefix=prefix)
+        self.print_config_value(self.CONFIG_NAME_PROXY_PASSWORD, prefix=prefix)
         self.print_config_value(self.CONFIG_NAME_COMPETITION, prefix=prefix)
 
     ## Competitions

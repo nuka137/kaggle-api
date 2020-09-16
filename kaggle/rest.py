@@ -100,6 +100,7 @@ class RESTClientObject(object):
 
         # https pool manager
         if configuration.proxy:
+            proxy_headers = urllib3.ProxyManager(proxy_basic_auth="{}:{}".format(configuration.proxy_username, configuration.proxy_password))
             self.pool_manager = urllib3.ProxyManager(
                 num_pools=pools_size,
                 maxsize=maxsize,
@@ -108,6 +109,7 @@ class RESTClientObject(object):
                 cert_file=configuration.cert_file,
                 key_file=configuration.key_file,
                 proxy_url=configuration.proxy,
+                proxy_headers=proxy_headers,
                 **addition_pool_args
             )
         else:
